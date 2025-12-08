@@ -3,6 +3,7 @@
 @tailwind utilities;
 @reference "tailwindcss";
 
+
 body {
   @apply bg-gray-50;
 }

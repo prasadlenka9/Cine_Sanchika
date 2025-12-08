@@ -98,8 +98,69 @@
 
 
 
-import React, { useState, createContext, useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+// import React, { useState, createContext, useEffect } from "react";
+// import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+
+// import Header from "./components/Header";
+// import Footer from "./components/Footer";
+// import Home from "./pages/Home";
+// import Login from "./pages/Login";
+// import Signup from "./pages/SignUp";
+// import Profile from "./pages/Profile";
+// import MovieDetails from "./pages/MovieDetails";
+// import Search from "./pages/Search";
+// import ActorDetails from "./pages/ActorDetails";
+// import UserProfile from "./pages/UserProfile.jsx";
+// import About from "./pages/About.jsx";
+
+// // Context
+// export const ThemeContext = createContext();
+// export default function App() {
+//   const storedToken = localStorage.getItem("token");
+//   const [token, setToken] = useState(storedToken);
+//   const [isLoggedIn, setIsLoggedIn] = useState(Boolean(storedToken));
+
+//   const setAppToken = (t) => {
+//     if (t) localStorage.setItem("token", t);
+//     else localStorage.removeItem("token");
+//     setToken(t);
+//     setIsLoggedIn(Boolean(t));
+//   };
+
+//   return (
+//     <ThemeContext.Provider value={{ token, setToken: setAppToken, isLoggedIn, setIsLoggedIn }}>
+//       <BrowserRouter>
+//         <div className="flex flex-col min-h-screen">
+//           <Header />
+//           <main className="flex-1 container mx-auto px-4 py-6">
+//             <Routes>
+//               <Route path="/" element={<Home />} />
+//               <Route path="/login" element={<Login />} />
+//               <Route path="/signup" element={<Signup />} />
+//               <Route path="/profile" element={<Profile />} />
+//               <Route path="/movies/:id" element={<MovieDetails />} />
+//               <Route path="/about" element={<About />} />
+//               <Route path="/actor/:id" element={<ActorDetails />} />
+//               <Route path="/search" element={<Search />} />
+//               <Route path="/profile/:username" element={<UserProfile />} />
+//               <Route path="/user/:username" element={<UserProfile />} />
+//             </Routes>
+//           </main>
+//           <Footer />
+//         </div>
+//       </BrowserRouter>
+//     </ThemeContext.Provider>
+//   );
+// }
+
+
+
+
+
+
+import React, { useState, createContext } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -111,9 +172,13 @@ import MovieDetails from "./pages/MovieDetails";
 import Search from "./pages/Search";
 import ActorDetails from "./pages/ActorDetails";
 import UserProfile from "./pages/UserProfile.jsx";
+import About from "./pages/About.jsx";
 
 // Context
 export const ThemeContext = createContext();
+
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
 export default function App() {
   const storedToken = localStorage.getItem("token");
   const [token, setToken] = useState(storedToken);
@@ -127,27 +192,36 @@ export default function App() {
   };
 
   return (
-    <ThemeContext.Provider value={{ token, setToken: setAppToken, isLoggedIn, setIsLoggedIn }}>
-      <BrowserRouter>
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-1 container mx-auto px-4 py-6">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/movies/:id" element={<MovieDetails />} />
-              <Route path="/actor/:id" element={<ActorDetails />} />
-              <Route path="/search" element={<Search />} />
-              <Route path="/profile/:username" element={<UserProfile />} />
-              <Route path="/user/:username" element={<UserProfile />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </BrowserRouter>
-    </ThemeContext.Provider>
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      <ThemeContext.Provider
+        value={{ token, setToken: setAppToken, isLoggedIn, setIsLoggedIn }}
+      >
+        <BrowserRouter>
+          <div className="flex flex-col min-h-screen bg-gray-100">
+            {/* Header */}
+            <Header />
+
+            {/* Main content */}
+            <main className="flex-1 container mx-auto px-4 py-6">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/movies/:id" element={<MovieDetails />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/actor/:id" element={<ActorDetails />} />
+                <Route path="/search" element={<Search />} />
+                <Route path="/profile/:username" element={<UserProfile />} />
+                <Route path="/user/:username" element={<UserProfile />} />
+              </Routes>
+            </main>
+
+            {/* Footer */}
+            <Footer />
+          </div>
+        </BrowserRouter>
+      </ThemeContext.Provider>
+    </GoogleOAuthProvider>
   );
 }
-

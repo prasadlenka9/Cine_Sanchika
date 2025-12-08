@@ -58,46 +58,134 @@
 
 // export default router;
 
-import express from "express";
-import User from "../models/User.js";
-import { authMiddleware } from "../middleware/auth.js";
+// import express from "express";
+// import User from "../models/User.js";
+// import { authMiddleware } from "../middleware/auth.js";
 
-const router = express.Router();
+// const router = express.Router();
 
-// -----------------------------
-// 🔍 1. Search users by username
-// -----------------------------
-router.get("/search", async (req, res) => {
-  try {
-    const query = req.query.query;
-    if (!query) return res.json([]);
+// // -----------------------------
+// // 🔍 1. Search users by username
+// // -----------------------------
+// router.get("/search", async (req, res) => {
+//   try {
+//     const query = req.query.query;
+//     if (!query) return res.json([]);
 
-    const users = await User.find({
-      username: { $regex: query, $options: "i" },
-    }).select("username _id email");
+//     const users = await User.find({
+//       username: { $regex: query, $options: "i" },
+//     }).select("username _id email");
 
-    res.json(users);
-  } catch (err) {
-    console.error("User search error:", err);
-    res.status(500).json({ error: "Server error" });
-  }
-});
+//     res.json(users);
+//   } catch (err) {
+//     console.error("User search error:", err);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// });
 
-// -----------------------------
-// 👤 2. Get user profile by username
-// -----------------------------
+// // -----------------------------
+// // 👤 2. Get user profile by username
+// // -----------------------------
+// router.get("/:username", async (req, res) => {
+//   try {
+//     const user = await User.findOne({ username: req.params.username }).select(
+//       "username email topFavorites followers following"
+//     );
+//     if (!user) return res.status(404).json({ message: "User not found" });
+
+//     res.json(user);
+//   } catch (err) {
+//     console.error("Fetch user error:", err);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// });
+
+// export default router;
+
+
+
+
+
+
+
+// import express from "express";
+// import User from "../models/User.js";
+
+// const router = express.Router();
+
+// // -----------------------------
+// // 🔍 Search users by username
+// // -----------------------------
+// router.get("/search", async (req, res) => {
+//   try {
+//     const query = req.query.query;
+//     if (!query) return res.json([]);
+
+//     const users = await User.find({
+//       username: { $regex: query, $options: "i" },
+//     }).select("username _id email");
+
+//     res.json(users);
+//   } catch (err) {
+//     console.error("User search error:", err);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// });
+
+// // -----------------------------
+// // 👤 Get user profile by username
+// // -----------------------------
+// router.get("/:username", async (req, res) => {
+//   try {
+//     const user = await User.findOne({ username: req.params.username }).select(
+//       "username email topFavorites followers following"
+//     );
+
+//     if (!user) return res.status(404).json({ message: "User not found" });
+
+//     // Manually fetch followers + following info
+//     const followersData = await User.find({ username: { $in: user.followers } })
+//       .select("username email _id");
+//     const followingData = await User.find({ username: { $in: user.following } })
+//       .select("username email _id");
+
+//     res.json({
+//       user,
+//       followers: followersData,
+//       following: followingData,
+//     });
+//   } catch (err) {
+//     console.error("Fetch user error:", err);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// });
+
+// export default router;
+
+
+
+
+
+
+
+// 👤 Get user profile by username
 router.get("/:username", async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.params.username }).select(
-      "username email topFavorites followers following"
-    );
+    const user = await User.findOne({ username: req.params.username })
+      .select("username email topFavorites followers following"); // keep it simple
+
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    res.json(user);
+    // Send followers/following as string arrays (already stored as strings)
+    res.json({
+      username: user.username,
+      email: user.email,
+      topFavorites: user.topFavorites,
+      followers: user.followers,   // array of usernames
+      following: user.following,   // array of usernames
+    });
   } catch (err) {
     console.error("Fetch user error:", err);
     res.status(500).json({ error: "Server error" });
   }
 });
-
-export default router;

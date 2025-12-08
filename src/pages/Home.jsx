@@ -308,9 +308,230 @@
 
 
 
-import React, { useEffect, useState, useContext } from "react";
+// import React, { useEffect, useState, useContext } from "react";
+// import { ThemeContext } from "../App";
+// import { Link } from "react-router-dom";
+
+// const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
+// const TMDB_BASE_URL = import.meta.env.VITE_TMDB_BASE_URL;
+// const IMG_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
+
+// export default function Home() {
+//   const [recent, setRecent] = useState([]);
+//   const [upcoming, setUpcoming] = useState([]);
+//   const { isLoggedIn } = useContext(ThemeContext);
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const today = new Date().toISOString().split("T")[0];
+
+//         const recentRes = await fetch(
+//           `${TMDB_BASE_URL}/discover/movie?api_key=${TMDB_KEY}&with_original_language=te&region=IN&sort_by=release_date.desc&release_date.lte=${today}`
+//         );
+//         const recentData = await recentRes.json();
+//         setRecent(recentData.results || []);
+
+//         const upcomingRes = await fetch(
+//           `${TMDB_BASE_URL}/discover/movie?api_key=${TMDB_KEY}&with_original_language=te&region=IN&sort_by=release_date.asc&release_date.gte=${today}`
+//         );
+//         const upcomingData = await upcomingRes.json();
+//         setUpcoming(upcomingData.results || []);
+//       } catch (err) {
+//         console.error("Failed to fetch movies:", err);
+//       }
+//     };
+
+//     fetchData();
+//   }, [isLoggedIn]);
+
+//   const MovieRow = ({ title, movies }) => (
+//     <section className="mb-12">
+//       <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b-2 border-gray-300 pb-2">
+//         {title}
+//       </h2>
+//       <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+//         {movies.map((movie) => (
+//           <div
+//             key={movie.id}
+//             className="relative flex-none w-36 sm:w-44 bg-white rounded-xl shadow-md hover:shadow-xl transition transform hover:scale-105 overflow-hidden"
+//           >
+//             <Link to={`/movies/${movie.id}`}>
+//               {movie.poster_path ? (
+//                 <img
+//                   src={`${IMG_BASE_URL}${movie.poster_path}`}
+//                   alt={movie.title}
+//                   className="w-full aspect-[2/3] object-cover"
+//                 />
+//               ) : (
+//                 <div className="w-full aspect-[2/3] bg-gray-200 flex items-center justify-center text-gray-500">
+//                   No Image
+//                 </div>
+//               )}
+//             </Link>
+//             <div className="p-3 text-center">
+//               <h3 className="font-letterboxd text-gray-800 text-sm truncate">
+//                 {movie.title}
+//               </h3>
+//               <p className="text-gray-500 text-xs mt-1">
+//                 {movie.release_date
+//                   ? movie.release_date.split("-")[0]
+//                   : "N/A"}
+//               </p>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </section>
+//   );
+
+//   return (
+//   <div className="flex flex-col font-letterboxd min-h-screen p-4 max-w-7xl mx-auto bg-gray-100">
+//     <h2 className="text-3xl font-letterboxd text-3xl text-primary text-center my-6 text-burgundy-600">
+//       Welcome to CineSanchika 
+//     </h2>
+
+//     <MovieRow title="Recently Released" movies={recent} />
+//     <MovieRow title="Upcoming Releases" movies={upcoming} />
+//   </div>
+// );
+
+// }
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useEffect, useState, useContext } from "react";
+// import { ThemeContext } from "../App";
+// import { Link } from "react-router-dom";
+// import axios from "axios";
+
+// const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
+// const TMDB_BASE_URL = import.meta.env.VITE_TMDB_BASE_URL;
+// const IMG_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
+
+// export default function Home() {
+//   const [recent, setRecent] = useState([]);
+//   const [upcoming, setUpcoming] = useState([]);
+//   const [username, setUsername] = useState("");
+//   const { isLoggedIn, token } = useContext(ThemeContext);
+
+//   // Fetch logged-in user info
+//   useEffect(() => {
+//     if (isLoggedIn && token) {
+//       const fetchUser = async () => {
+//         try {
+//           const res = await axios.get("http://localhost:5000/api/users/me", {
+//             headers: { Authorization: `Bearer ${token}` },
+//           });
+//           setUsername(res.data.username);
+//         } catch (err) {
+//           console.error("Fetch user error:", err);
+//         }
+//       };
+//       fetchUser();
+//     }
+//   }, [isLoggedIn, token]);
+
+//   // Fetch recent and upcoming movies
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const today = new Date().toISOString().split("T")[0];
+
+//         const recentRes = await fetch(
+//           `${TMDB_BASE_URL}/discover/movie?api_key=${TMDB_KEY}&with_original_language=te&region=IN&sort_by=release_date.desc&release_date.lte=${today}`
+//         );
+//         const recentData = await recentRes.json();
+//         setRecent(recentData.results || []);
+
+//         const upcomingRes = await fetch(
+//           `${TMDB_BASE_URL}/discover/movie?api_key=${TMDB_KEY}&with_original_language=te&region=IN&sort_by=release_date.asc&release_date.gte=${today}`
+//         );
+//         const upcomingData = await upcomingRes.json();
+//         setUpcoming(upcomingData.results || []);
+//       } catch (err) {
+//         console.error("Failed to fetch movies:", err);
+//       }
+//     };
+
+//     fetchData();
+//   }, [isLoggedIn]);
+
+//   const MovieRow = ({ title, movies }) => (
+//     <section className="mb-12">
+//       <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b-2 border-gray-300 pb-2">
+//         {title}
+//       </h2>
+//       <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+//         {movies.map((movie) => (
+//           <div
+//             key={movie.id}
+//             className="relative flex-none w-36 sm:w-44 bg-white rounded-xl shadow-md hover:shadow-xl transition transform hover:scale-105 overflow-hidden"
+//           >
+//             <Link to={`/movies/${movie.id}`}>
+//               {movie.poster_path ? (
+//                 <img
+//                   src={`${IMG_BASE_URL}${movie.poster_path}`}
+//                   alt={movie.title}
+//                   className="w-full aspect-[2/3] object-cover"
+//                 />
+//               ) : (
+//                 <div className="w-full aspect-[2/3] bg-gray-200 flex items-center justify-center text-gray-500">
+//                   No Image
+//                 </div>
+//               )}
+//             </Link>
+//             <div className="p-3 text-center">
+//               <h3 className="font-letterboxd text-gray-800 text-sm truncate">
+//                 {movie.title}
+//               </h3>
+//               <p className="text-gray-500 text-xs mt-1">
+//                 {movie.release_date
+//                   ? movie.release_date.split("-")[0]
+//                   : "N/A"}
+//               </p>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </section>
+//   );
+
+//   return (
+//     <div className="flex flex-col font-letterboxd min-h-screen p-4 max-w-7xl mx-auto bg-gray-100">
+//       <h2 className="text-3xl font-letterboxd text-center my-6 text-burgundy-600">
+//   Welcome to CineSanchika
+//   {isLoggedIn && username && (
+//     <span className="text-burgundy-900">,  {username} :)</span>
+//   )}
+// </h2>
+
+
+//       <MovieRow title="Recently Released" movies={recent} />
+//       <MovieRow title="Upcoming Releases" movies={upcoming} />
+//     </div>
+//   );
+// }
+
+
+
+
+
+
+
+
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { ThemeContext } from "../App";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const TMDB_BASE_URL = import.meta.env.VITE_TMDB_BASE_URL;
@@ -319,10 +540,48 @@ const IMG_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
 export default function Home() {
   const [recent, setRecent] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
-  const { isLoggedIn } = useContext(ThemeContext);
+  const [friendsActivity, setFriendsActivity] = useState([]);
+  const [todayRecommendations, setTodayRecommendations] = useState([]);
+  const [username, setUsername] = useState("");
+  const { isLoggedIn, token } = useContext(ThemeContext);
 
+  const scrollRefs = {
+    recent: useRef(null),
+    upcoming: useRef(null),
+    friends: useRef(null),
+    recommendations: useRef(null),
+  };
+
+  // Fetch logged-in user info
   useEffect(() => {
-    const fetchData = async () => {
+    if (isLoggedIn && token) {
+      const fetchUser = async () => {
+        try {
+          const res = await axios.get("http://localhost:5000/api/users/me", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          setUsername(res.data.username);
+
+          // Fetch friends activity
+          if (res.data.following.length > 0) {
+            const friendsRes = await axios.post(
+              "http://localhost:5000/api/reviews/friends",
+              { following: res.data.following },
+              { headers: { Authorization: `Bearer ${token}` } }
+            );
+            setFriendsActivity(friendsRes.data);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      fetchUser();
+    }
+  }, [isLoggedIn, token]);
+
+  // Fetch recent, upcoming, and today's recommendations
+  useEffect(() => {
+    const fetchMovies = async () => {
       try {
         const today = new Date().toISOString().split("T")[0];
 
@@ -337,30 +596,62 @@ export default function Home() {
         );
         const upcomingData = await upcomingRes.json();
         setUpcoming(upcomingData.results || []);
+
+        // Today's recommendations: random Telugu movies
+        const recommendationsRes = await fetch(
+          `${TMDB_BASE_URL}/discover/movie?api_key=${TMDB_KEY}&with_original_language=te&region=IN&sort_by=popularity.desc`
+        );
+        const recommendationsData = await recommendationsRes.json();
+        // pick 10 random
+        setTodayRecommendations(
+          recommendationsData.results
+            .sort(() => 0.5 - Math.random())
+            .slice(0, 10)
+        );
       } catch (err) {
         console.error("Failed to fetch movies:", err);
       }
     };
+    fetchMovies();
+  }, []);
 
-    fetchData();
-  }, [isLoggedIn]);
+  // Auto-scroll logic
+  useEffect(() => {
+    const scroll = (ref) => {
+      if (!ref.current) return;
+      let scrollLeft = 0;
+      const width = ref.current.scrollWidth / 2;
+      const speed = 0.3; // slower
+      const animate = () => {
+        scrollLeft += speed;
+        if (scrollLeft >= width) scrollLeft = 0;
+        ref.current.scrollLeft = scrollLeft;
+        requestAnimationFrame(animate);
+      };
+      animate();
+    };
+    Object.values(scrollRefs).forEach(scroll);
+  }, []);
 
-  const MovieRow = ({ title, movies }) => (
-    <section className="mb-12">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b-2 border-gray-300 pb-2">
+  const MovieRow = ({ title, movies, refProp }) => (
+    <section className="mb-8">
+      <h2 className="text-xl font-bold mb-4 text-gray-800 border-b-2 border-gray-300 pb-1">
         {title}
       </h2>
-      <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+      <div
+        ref={refProp}
+        className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide"
+      >
         {movies.map((movie) => (
           <div
-            key={movie.id}
-            className="relative flex-none w-36 sm:w-44 bg-white rounded-xl shadow-md hover:shadow-xl transition transform hover:scale-105 overflow-hidden"
+            key={movie.id || movie._id}
+            className="relative flex-none w-28 sm:w-32 bg-white rounded-xl shadow-md hover:shadow-xl transition transform hover:scale-105 overflow-hidden"
           >
-            <Link to={`/movies/${movie.id}`}>
-              {movie.poster_path ? (
+            <Link to={`/movies/${movie.id || movie.movieId}`}>
+              {movie.poster_path || movie.poster ? (
                 <img
-                  src={`${IMG_BASE_URL}${movie.poster_path}`}
-                  alt={movie.title}
+                  src={`${IMG_BASE_URL}${movie.poster_path || movie.poster}`}
+                  alt={movie.title || movie.movieTitle}
                   className="w-full aspect-[2/3] object-cover"
                 />
               ) : (
@@ -369,15 +660,10 @@ export default function Home() {
                 </div>
               )}
             </Link>
-            <div className="p-3 text-center">
-              <h3 className="font-semibold text-gray-800 text-sm truncate">
-                {movie.title}
+            <div className="p-2 text-center">
+              <h3 className="font-letterboxd text-gray-800 text-xs truncate">
+                {movie.title || movie.movieTitle}
               </h3>
-              <p className="text-gray-500 text-xs mt-1">
-                {movie.release_date
-                  ? movie.release_date.split("-")[0]
-                  : "N/A"}
-              </p>
             </div>
           </div>
         ))}
@@ -386,14 +672,20 @@ export default function Home() {
   );
 
   return (
-  <div className="flex flex-col min-h-screen p-4 max-w-7xl mx-auto bg-gray-100">
-    <h2 className="text-3xl font-bold text-center my-6 text-burgundy-600">
-      Welcome to CineSanchika
-    </h2>
+    <div className="flex flex-col font-letterboxd min-h-screen p-4 max-w-7xl mx-auto bg-gray-100">
+      <h2 className="text-2xl sm:text-3xl text-center my-4 text-burgundy-600">
+        Welcome to CineSanchika
+        {isLoggedIn && username && (
+          <span className="text-burgundy-900">, {username} :)</span>
+        )}
+      </h2>
 
-    <MovieRow title="Recently Released" movies={recent} />
-    <MovieRow title="Upcoming Releases" movies={upcoming} />
-  </div>
-);
-
+      <MovieRow title="Recently Released" movies={recent} refProp={scrollRefs.recent} />
+      <MovieRow title="Upcoming Releases" movies={upcoming} refProp={scrollRefs.upcoming} />
+      {friendsActivity.length > 0 && (
+        <MovieRow title="Friends Recent Activity" movies={friendsActivity} refProp={scrollRefs.friends} />
+      )}
+      <MovieRow title="Today's Recommendations" movies={todayRecommendations} refProp={scrollRefs.recommendations} />
+    </div>
+  );
 }
