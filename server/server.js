@@ -1235,6 +1235,7 @@ dotenv.config({ path: path.join(__dirname, ".env") });
 const app = express();
 app.use(cors({ origin: process.env.CLIENT_URL }));
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "../dist")));
 
 if (!process.env.MONGO_URI || !process.env.JWT_SECRET || !process.env.GOOGLE_CLIENT_ID) {
   console.error("Missing required .env variables");
@@ -1514,6 +1515,10 @@ app.post("/api/reviews", authMiddleware, async (req, res) => {
     console.error("Failed to submit review:", err);
     res.status(500).json({ message: "Failed to submit review" });
   }
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../dist/index.html"));
 });
 
 // ---------------- Start Server ----------------
