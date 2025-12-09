@@ -1240,7 +1240,7 @@ app.use(express.json());
 
 // Serve React build
 const distPath = path.join(__dirname, "../dist");
-app.use(express.static(distPath));
+app.use(express.static(path.join(__dirname, "../dist")));
 
 if (!process.env.MONGO_URI || !process.env.JWT_SECRET || !process.env.GOOGLE_CLIENT_ID) {
   console.error("Missing required .env variables");
@@ -1361,7 +1361,7 @@ app.post("/api/auth/google", async (req, res) => {
 // ---- ALL YOUR OTHER ROUTES (favorites, follow, reviews) remain SAME ----
 
 // ---------------- FRONTEND CATCH-ALL ROUTE ----------------
-app.get('*', (req, res) => {
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
