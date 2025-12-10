@@ -20,9 +20,10 @@ export default function Profile() {
   const token = localStorage.getItem("token");
 
   const api = axios.create({
-    baseURL: "http://localhost:5000",
-    headers: token ? { Authorization: `Bearer ${token}` } : {},
-  });
+  baseURL: import.meta.env.VITE_BACKEND_URL,
+  headers: token ? { Authorization: `Bearer ${token}` } : {},
+});
+
 
   const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
