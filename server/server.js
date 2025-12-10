@@ -1361,9 +1361,9 @@ app.post("/api/auth/google", async (req, res) => {
 // ---- ALL YOUR OTHER ROUTES (favorites, follow, reviews) remain SAME ----
 
 // ---------------- FRONTEND CATCH-ALL ROUTE ----------------
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
+// app.get(/.*/, (req, res) => {
+//   res.sendFile(path.join(__dirname, '../dist/index.html'));
+// });
 
 
 // ---------------- START SERVER ----------------
